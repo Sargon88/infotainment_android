@@ -26,6 +26,7 @@ public class SocketSingleton {
     public void configureSocket(int i) throws URISyntaxException {
         IO.Options opt = new IO.Options();
         opt.reconnection = true;
+        opt.reconnectionAttempts = 20;
 
         /* temporarily not used
         String ip = buildSocketAddress(i);

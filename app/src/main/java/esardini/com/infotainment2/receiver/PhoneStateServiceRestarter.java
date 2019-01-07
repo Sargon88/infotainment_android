@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.deser.impl.CreatorCandidate;
+
+import esardini.com.infotainment2.constants.Params;
 import esardini.com.infotainment2.service.MainService;
 import esardini.com.infotainment2.service.PhoneStateService;
 
@@ -21,7 +24,11 @@ public class PhoneStateServiceRestarter extends BroadcastReceiver {
         MainService mService = new MainService(context);
 
         if(!mService.isMyServiceRunning(phoneStateService.getClass(), context)){
-            context.startForegroundService(new Intent(context, phoneStateService.getClass()));
+            if(!Params.KILL_ALL) {
+                context.startForegroundService(new Intent(context, phoneStateService.getClass()));
+            }else {
+                Log.i(TAG, "KILL ALL: " + Params.KILL_ALL);
+            }
         }
 
     }

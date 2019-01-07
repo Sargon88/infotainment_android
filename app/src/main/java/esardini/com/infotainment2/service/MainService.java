@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.net.URISyntaxException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -71,6 +73,8 @@ public class MainService {
 
                         Log.i(TAG, "SOCKET CONNECTED");
                         SocketSingleton.getInstance().setConnected(true);
+                        Params.STOP_TIME = null;
+                        Params.KILL_ALL = false;
 
                         ((Activity)context).runOnUiThread(new Runnable() {
                             @Override
@@ -144,12 +148,27 @@ public class MainService {
 
         if(ipIndex < Params.IPLIST.length) {
             SocketSingleton.getInstance().configureSocket(ipIndex);
+            SocketSingleton.connect();
         } else {
             Log.e(TAG, "Impossibile connettersi a nessuno degli ip salvati");
-            ((Activity)context).finish();
-        }
 
-        SocketSingleton.connect();
+            if(Params.STOP_TIME == null) {
+                Params.STOP_TIME = Calendar.getInstance().getTime();
+                Log.i(TAG, "Stop Time: " + Params.STOP_TIME);
+
+            } else {
+                Date now = Calendar.getInstance().getTime();
+                Log.i(TAG, "DIFF: " + (now.getTime() - Params.STOP_TIME.getTime()));
+
+                if ((now.getTime() - Params.STOP_TIME.getTime()) > Params.TRY_CONNECT_TASK_FREQUENCE) {
+
+                    ((Activity) context).finish();
+                    Params.KILL_ALL = true;
+
+                    killServices();
+                }
+            }
+        }
     }
 
     public void initializeButtons(){
@@ -476,6 +495,14 @@ public class MainService {
             Log.i(TAG, "Starting SocketEventsListenersService");
             context.startForegroundService(socketEventsLisIntent);
         }
+    }
+
+    private void killServices(){
+        Intent mainServiceIntent = new Intent(context, MainService.class);
+        context.stopService(mainServiceIntent);
+
+        Intent phoneStateServiceIntent = new Intent(context, PhoneStateService.class);
+        context.stopService(phoneStateServiceIntent);
     }
 
 
