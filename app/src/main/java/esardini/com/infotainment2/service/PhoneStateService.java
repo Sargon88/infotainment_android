@@ -109,6 +109,16 @@ public class PhoneStateService extends Service {
     private TimerTask gpsTask;
     private TimerTask tryConnectTask;
 
+    private int gpsFrequence = Params.COORDINATES_TASK_FREQUENCE;
+
+    public int getGpsFrequence(){
+        return gpsFrequence;
+    }
+
+    public void setGpsFrequence(int i){
+        gpsFrequence = i;
+    }
+
     /* Main Function*/
     public void startTimer(){
         Log.d(TAG, "startTimer");
@@ -127,8 +137,9 @@ public class PhoneStateService extends Service {
                 initializeStatusTask();
                 initializeGpsTask();
 
+                Log.i(TAG, "Frequence: " + gpsFrequence);
                 timer.schedule(statusTask, Params.TASK_DELAY, Params.PHONE_STATUS_TASK_FREQUENCE);
-                timer2.schedule(gpsTask, Params.TASK_DELAY, Params.COORDINATES_TASK_FREQUENCE);
+                timer2.schedule(gpsTask, Params.TASK_DELAY, gpsFrequence);
             }
 
         } catch (URISyntaxException e) {
