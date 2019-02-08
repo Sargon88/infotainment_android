@@ -10,11 +10,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.net.URISyntaxException;
 
 import esardini.com.infotainment2.constants.InterfaceSingleton;
 
+import esardini.com.infotainment2.constants.Params;
 import esardini.com.infotainment2.constants.SocketSingleton;
 import esardini.com.infotainment2.service.MainService;
 import esardini.com.infotainment2.service.PhoneStateService;
@@ -78,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
         interfaceSingleton.setWaitingBar(findViewById(R.id.waitingBar));
 
         mService.initializeButtons();
+
+        TextView ipView = findViewById(R.id.ip);
+        ipView.setText(Params.SOCKET_ADDRESS);
+
 
         /*----- CONNECTION TASK -----*/
         new AsyncTask<String, Void, String>() {
