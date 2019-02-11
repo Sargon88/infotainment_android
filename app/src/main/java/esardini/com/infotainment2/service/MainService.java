@@ -6,7 +6,9 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -26,6 +28,7 @@ import esardini.com.infotainment2.constants.InterfaceSingleton;
 import esardini.com.infotainment2.constants.Params;
 import esardini.com.infotainment2.constants.SocketEvents;
 import esardini.com.infotainment2.constants.SocketSingleton;
+import esardini.com.infotainment2.settings.SettingsActivity;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
@@ -150,7 +153,7 @@ public class MainService {
             SocketSingleton.getInstance().configureSocket(ipIndex);
             SocketSingleton.connect();
         } else {
-            Log.e(TAG, "Impossibile connettersi a nessuno degli ip salvati");
+            Log.e(TAG, "Impossibile connettersi a nessuno degli ip salvati: " + Params.RASPBERRY);
 
             if(Params.STOP_TIME == null) {
                 Params.STOP_TIME = Calendar.getInstance().getTime();
@@ -162,7 +165,7 @@ public class MainService {
 
                 if ((now.getTime() - Params.STOP_TIME.getTime()) > Params.TRY_CONNECT_TASK_FREQUENCE) {
 
-                    ((Activity) context).finish();
+                    //((Activity) context).finish();
                     Params.KILL_ALL = true;
 
                     killServices();
@@ -506,6 +509,18 @@ public class MainService {
     }
 
 
+    public void initializeParams() {
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
+        String ip = sharedPref.getString(SettingsActivity.KEY_RASPBERRY_IP,"Ip Here");
+        String port = sharedPref.getString(SettingsActivity.KEY_RASPBERRY_PORT,"Port Here");
+
+        Params.RASPBERRY = ip;
+        Params.SOCKET_PORT = port;
+        Params.SOCKET_ADDRESS = "http://"+ ip + ":" + port;
+
+        Log.i(TAG + "aaa", "SERVER: " + Params.RASPBERRY);
+        Log.i(TAG + "aaa", "PORT: " + Params.SOCKET_PORT);
+    }
 }

@@ -1,4 +1,30 @@
 <resources>
     <string name="app_name">Infotainment2</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="ip_label">IP:</string>
+    <string name="pref_header_general">General</string>
+
+    <string name="ip_list_label">Server Ip</string>
+    <string-array name="ip_list_titles">
+        <item>VM (192.168.2.176)</item>
+        <item>Macchina (192.168.43.208)</item>
+    </string-array>
+    <string-array name="ip_list_values">
+        <item>"192.168.2.176"</item>
+        <item>"192.168.43.208"</item>
+    </string-array>
+
+    <string name="port_input_label">Server Port</string>
+    <string name="phone_status_freq_label">Phone Status Frequency</string>
+    <string name="coordinates_freq_label">Coordinates Frequency</string>
+    <string name="try_connect_freq_label">Try Connect Frequency</string>
+    <string name="task_delay_label">Task Delay</string>
+    <string name="stop_time_label">Stop Time</string>
+
 </resources>

@@ -7,9 +7,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.net.URISyntaxException;
@@ -21,6 +25,7 @@ import esardini.com.infotainment2.constants.SocketSingleton;
 import esardini.com.infotainment2.service.MainService;
 import esardini.com.infotainment2.service.PhoneStateService;
 import esardini.com.infotainment2.service.SocketEventsListenersService;
+import esardini.com.infotainment2.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = this;
 
+
         Log.d(TAG, "verifyPermissions");
         Activity a = (Activity) context;
         ActivityCompat.requestPermissions(a,
@@ -64,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         connected = false;
 
         mService = new MainService(context);
+        mService.initializeParams();
 
         setContentView(R.layout.activity_main);
 
@@ -83,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
         TextView ipView = findViewById(R.id.ip);
         ipView.setText(Params.SOCKET_ADDRESS);
-
 
         /*----- CONNECTION TASK -----*/
         new AsyncTask<String, Void, String>() {
@@ -128,6 +134,30 @@ public class MainActivity extends AppCompatActivity {
          */
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

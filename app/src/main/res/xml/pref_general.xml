@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:id="@+id/settings_ip"
+        android:defaultValue="192.168.2.176"
+        android:entries="@array/ip_list_titles"
+        android:entryValues="@array/ip_list_values"
+        android:key="raspberry_ip"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/ip_label" />
+
+    <EditTextPreference
+        android:id="@+id/settings_port"
+        android:defaultValue="8080"
+        android:key="raspberry_port"
+        android:title="@string/port_input_label"/>
+
+</PreferenceScreen>
