@@ -19,6 +19,7 @@ public class Params {
     public static int TASK_DELAY = 1000;
     public static Boolean KILL_ALL = false;
     public static Date STOP_TIME = null;
+    public static int MAX_CONNECTION_RETRY = 20;
 
 
 

@@ -26,5 +26,6 @@
     <string name="try_connect_freq_label">Try Connect Frequency</string>
     <string name="task_delay_label">Task Delay</string>
     <string name="stop_time_label">Stop Time</string>
+    <string name="max_connection_label">Max Connection Retry</string>
 
 </resources>

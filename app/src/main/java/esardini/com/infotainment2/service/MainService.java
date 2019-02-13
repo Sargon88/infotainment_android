@@ -42,6 +42,7 @@ public class MainService {
     private SocketEventsListenersService socketEventsListeners;
     private Boolean scanning = true;
     private Integer ipIndex = 0;
+    private Integer connectionRetry = 1;
 
     public MainService(Context c){
         context = c;
@@ -76,8 +77,8 @@ public class MainService {
 
                         Log.i(TAG, "SOCKET CONNECTED");
                         SocketSingleton.getInstance().setConnected(true);
-                        Params.STOP_TIME = null;
                         Params.KILL_ALL = false;
+                        connectionRetry = 1;
 
                         ((Activity)context).runOnUiThread(new Runnable() {
                             @Override
@@ -155,22 +156,18 @@ public class MainService {
         } else {
             Log.e(TAG, "Impossibile connettersi a nessuno degli ip salvati: " + Params.RASPBERRY);
 
-            if(Params.STOP_TIME == null) {
-                Params.STOP_TIME = Calendar.getInstance().getTime();
-                Log.i(TAG, "Stop Time: " + Params.STOP_TIME);
 
-            } else {
-                Date now = Calendar.getInstance().getTime();
-                Log.i(TAG, "DIFF: " + (now.getTime() - Params.STOP_TIME.getTime()));
+            Log.i(TAG, "RETRY: " + connectionRetry + " on " + Params.MAX_CONNECTION_RETRY);
 
-                if ((now.getTime() - Params.STOP_TIME.getTime()) > Params.TRY_CONNECT_TASK_FREQUENCE) {
+            if (connectionRetry >= Params.MAX_CONNECTION_RETRY) {
 
-                    //((Activity) context).finish();
-                    Params.KILL_ALL = true;
+                //((Activity) context).finish();
+                Params.KILL_ALL = true;
 
-                    killServices();
-                }
+                killServices();
             }
+            connectionRetry++;
+
         }
     }
 
@@ -508,19 +505,27 @@ public class MainService {
         context.stopService(phoneStateServiceIntent);
     }
 
-
     public void initializeParams() {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
         String ip = sharedPref.getString(SettingsActivity.KEY_RASPBERRY_IP,"Ip Here");
         String port = sharedPref.getString(SettingsActivity.KEY_RASPBERRY_PORT,"Port Here");
+        String status = sharedPref.getString(SettingsActivity.KEY_PHONE_STATUS_TASK_FREQUENCE,"20000");
+        String coordinates = sharedPref.getString(SettingsActivity.KEY_COORDINATES_TASK_FREQUENCE,"1000");
+        String reconnect = sharedPref.getString(SettingsActivity.KEY_TRY_CONNECT_TASK_FREQUENCE,"30000");
+        String delay = sharedPref.getString(SettingsActivity.KEY_TASK_DELAY,"1000");
+        String retry = sharedPref.getString(SettingsActivity.KEY_MAX_CONN,"20");
+
 
         Params.RASPBERRY = ip;
         Params.SOCKET_PORT = port;
         Params.SOCKET_ADDRESS = "http://"+ ip + ":" + port;
+        Params.PHONE_STATUS_TASK_FREQUENCE = Integer.parseInt(status);
+        Params.COORDINATES_TASK_FREQUENCE = Integer.parseInt(coordinates);
+        Params.TRY_CONNECT_TASK_FREQUENCE = Integer.parseInt(reconnect);
+        Params.TASK_DELAY = Integer.parseInt(delay);
+        Params.MAX_CONNECTION_RETRY = Integer.parseInt(retry);
 
-        Log.i(TAG + "aaa", "SERVER: " + Params.RASPBERRY);
-        Log.i(TAG + "aaa", "PORT: " + Params.SOCKET_PORT);
     }
 }

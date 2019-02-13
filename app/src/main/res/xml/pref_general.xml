@@ -16,4 +16,29 @@
         android:key="raspberry_port"
         android:title="@string/port_input_label"/>
 
+    <EditTextPreference
+        android:id="@+id/settings_phone_status"
+        android:key="status_task_freq"
+        android:title="@string/phone_status_freq_label"/>
+
+    <EditTextPreference
+        android:id="@+id/settings_coordinates"
+        android:key="coo_task_freq"
+        android:title="@string/coordinates_freq_label"/>
+
+    <EditTextPreference
+        android:id="@+id/settings_reconnect"
+        android:key="reconnect_task_freq"
+        android:title="@string/try_connect_freq_label"/>
+
+    <EditTextPreference
+        android:id="@+id/settings_delay"
+        android:key="delay_task_freq"
+        android:title="@string/task_delay_label"/>
+
+    <EditTextPreference
+        android:id="@+id/settings_max_conn"
+        android:key="max_conn_retry"
+        android:title="@string/max_connection_label"/>
+
 </PreferenceScreen>

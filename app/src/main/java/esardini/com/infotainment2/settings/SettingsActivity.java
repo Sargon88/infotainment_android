@@ -39,6 +39,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     public static final String KEY_RASPBERRY_IP = "raspberry_ip";
     public static final String KEY_RASPBERRY_PORT = "raspberry_port";
+    public static final String KEY_PHONE_STATUS_TASK_FREQUENCE = "status_task_freq";
+    public static final String KEY_COORDINATES_TASK_FREQUENCE = "coo_task_freq";
+    public static final String KEY_TRY_CONNECT_TASK_FREQUENCE = "reconnect_task_freq"; //5 minuti
+    public static final String KEY_TASK_DELAY = "delay_task_freq";
+    public static final String KEY_MAX_CONN = "max_conn_retry";
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -169,6 +174,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             bindPreferenceSummaryToValue(findPreference(KEY_RASPBERRY_IP));
             bindPreferenceSummaryToValue(findPreference(KEY_RASPBERRY_PORT));
+            bindPreferenceSummaryToValue(findPreference(KEY_PHONE_STATUS_TASK_FREQUENCE));
+            bindPreferenceSummaryToValue(findPreference(KEY_COORDINATES_TASK_FREQUENCE));
+            bindPreferenceSummaryToValue(findPreference(KEY_TRY_CONNECT_TASK_FREQUENCE));
+            bindPreferenceSummaryToValue(findPreference(KEY_TASK_DELAY));
+            bindPreferenceSummaryToValue(findPreference(KEY_MAX_CONN));
         }
 
         @Override

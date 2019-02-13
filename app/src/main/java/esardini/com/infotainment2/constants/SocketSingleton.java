@@ -26,14 +26,14 @@ public class SocketSingleton {
     public void configureSocket(int i) throws URISyntaxException {
         IO.Options opt = new IO.Options();
         opt.reconnection = true;
-        opt.reconnectionAttempts = 20;
+        opt.reconnectionAttempts = Params.MAX_CONNECTION_RETRY;
 
         /* temporarily not used
         String ip = buildSocketAddress(i);
         Log.d(TAG, "Connecting to IP: " + ip);
         */
 
-        socket = IO.socket(Params.SOCKET_ADDRESS);
+        socket = IO.socket(Params.SOCKET_ADDRESS,  opt);
     }
 
     //temporarily not used
