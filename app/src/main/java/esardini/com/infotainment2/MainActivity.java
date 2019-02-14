@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.net.URISyntaxException;
 
 import esardini.com.infotainment2.constants.InterfaceSingleton;
@@ -159,5 +161,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

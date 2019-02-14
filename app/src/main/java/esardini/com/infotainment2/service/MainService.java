@@ -3,17 +3,22 @@ package esardini.com.infotainment2.service;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Binder;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.net.URISyntaxException;
 import java.util.Calendar;
@@ -156,12 +161,10 @@ public class MainService {
         } else {
             Log.e(TAG, "Impossibile connettersi a nessuno degli ip salvati: " + Params.RASPBERRY);
 
-
             Log.i(TAG, "RETRY: " + connectionRetry + " on " + Params.MAX_CONNECTION_RETRY);
 
             if (connectionRetry >= Params.MAX_CONNECTION_RETRY) {
 
-                //((Activity) context).finish();
                 Params.KILL_ALL = true;
 
                 killServices();
@@ -503,6 +506,13 @@ public class MainService {
 
         Intent phoneStateServiceIntent = new Intent(context, PhoneStateService.class);
         context.stopService(phoneStateServiceIntent);
+
+
+        try {
+            SocketSingleton.getInstance().getSocket().close();
+        } catch (URISyntaxException e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     public void initializeParams() {
@@ -528,4 +538,5 @@ public class MainService {
         Params.MAX_CONNECTION_RETRY = Integer.parseInt(retry);
 
     }
+
 }

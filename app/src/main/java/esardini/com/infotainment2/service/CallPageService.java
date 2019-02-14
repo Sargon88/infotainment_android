@@ -35,7 +35,7 @@ public class CallPageService {
     public List<CallHistoryBean> getLastCalls(Context c) {
         buildLastCallsList(c);
 
-        return lastCalls.subList(0, 5);
+        return lastCalls.subList(0, 7);
     }
 
     public String getStarredContactsJSON(Context c) {
