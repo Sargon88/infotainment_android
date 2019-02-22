@@ -71,11 +71,7 @@ public class PhoneStateService extends Service {
 
         getGpsCoordinates();
         startCallReceiver();
-
         startTimer();
-
-
-
         return START_STICKY;
     }
 

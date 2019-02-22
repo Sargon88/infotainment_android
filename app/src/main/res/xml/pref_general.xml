@@ -18,26 +18,31 @@
 
     <EditTextPreference
         android:id="@+id/settings_phone_status"
+        android:defaultValue="20000"
         android:key="status_task_freq"
         android:title="@string/phone_status_freq_label"/>
 
     <EditTextPreference
         android:id="@+id/settings_coordinates"
+        android:defaultValue="1000"
         android:key="coo_task_freq"
         android:title="@string/coordinates_freq_label"/>
 
     <EditTextPreference
         android:id="@+id/settings_reconnect"
+        android:defaultValue="30000"
         android:key="reconnect_task_freq"
         android:title="@string/try_connect_freq_label"/>
 
     <EditTextPreference
         android:id="@+id/settings_delay"
+        android:defaultValue="1000"
         android:key="delay_task_freq"
         android:title="@string/task_delay_label"/>
 
     <EditTextPreference
         android:id="@+id/settings_max_conn"
+        android:defaultValue="5"
         android:key="max_conn_retry"
         android:title="@string/max_connection_label"/>
 
